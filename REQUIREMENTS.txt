@@ -2,7 +2,6 @@ streamlit
 pandas
 numpy
 scikit-learn
-psycopg[binary]
 plotly
 matplotlib
 seaborn
