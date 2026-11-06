@@ -1,0 +1,65 @@
+{
+  "project": "Smart Waste-Bin Machine Learning",
+  "data_source": "Zenodo dataset supplied by the user: Deliver_data/*_fill_Corrected_with_metrics.csv (Ultra Sound Garbage Bin Sensor Reading Records; source files identify container fill readings)",
+  "target": "Hours from each reading until the first later fill reading at or above 80%, within the same Cidx collection cycle",
+  "full_level_pct": 80,
+  "bin_capacity_kg": null,
+  "weight": "No measured weight column is supplied in the selected fill CSV files. Weight is not used by this model; do not convert fill percentage to kg without verified container capacity.",
+  "rows": 227297,
+  "cycles": 12397,
+  "containers": 472,
+  "split": {
+    "method": "Chronological split by cycle start; entire collection cycles are assigned to one split to prevent a cycle crossing train/test boundaries.",
+    "train_rows": 135338,
+    "validation_rows": 32260,
+    "test_rows": 59699,
+    "train_cycle_count": 8677,
+    "validation_cycle_count": 1860,
+    "test_cycle_count": 1860,
+    "train_start": "2021-01-02 17:42:00",
+    "train_end": "2023-09-30 12:30:00",
+    "test_start": "2023-06-22 18:05:00",
+    "test_end": "2023-10-23 11:17:00"
+  },
+  "features": [
+    "fill_pct",
+    "hours_since_collection",
+    "avg_fill_rate",
+    "hour",
+    "is_weekend"
+  ],
+  "min_hours": 1,
+  "baseline": {
+    "MAE": 116.2535,
+    "RMSE": 167.1862,
+    "R2": 0.1635
+  },
+  "mlr": {
+    "MAE": 117.6554,
+    "RMSE": 173.7455,
+    "R2": 0.0966
+  },
+  "ridge": {
+    "MAE": 117.6554,
+    "RMSE": 173.7455,
+    "R2": 0.0966
+  },
+  "intercept": 271.45473196525,
+  "coefficients": {
+    "fill_pct": -5.150946892400696,
+    "hours_since_collection": 0.40161032081769643,
+    "avg_fill_rate": 2.166416093872558,
+    "hour": -0.06341777363178722,
+    "is_weekend": 2.25825222115871
+  },
+  "calibrated": false,
+  "raw_capacity_pct": null,
+  "training_notes": [
+    "Only corrected fill CSV files were used; rec/collection-event CSV files were not used as predictor features.",
+    "Rows with missing Cidx, Date or Fill were excluded.",
+    "A target was generated only for readings with a later >=80% reading in the same Cidx cycle.",
+    "Feature values use only the current reading, cycle start time, and timestamp-derived calendar values.",
+    "The 80% collection threshold is an operational modelling choice, not a validated physical safety threshold.",
+    "Test performance is weak; this linear model is a prototype and should not be presented as a reliable operational forecast."
+  ]
+}
